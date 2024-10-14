@@ -1,0 +1,29 @@
+
+{% if user.is_authenticated %}
+<form action="{% url 'blog:post_new_post' %}" method="post">
+
+    {% csrf_token %}
+    <div class="row">
+        <div class="col mt-2">
+            {{ form.title }}
+        </div>
+        <div class="col mt-2">
+            {{ form.tags }}
+        </div>
+        <div class="mt-2">
+            {{ form.body }}
+            </div>
+
+        <div class="col mt-2">
+
+
+            <input type="submit" class="btn btn-primary mb-3" value="Добавить пост">
+        </div>
+    </div>
+
+</form>
+{% else %}
+<h4>Разместить новый пост</h4>
+<p>Для размещения нового поста нужно выполнить <a href="{% url 'login' %}">вход в учетную запись</a>. Или пройдите <a
+        href="{% url 'signup' %}">регистрацию</a>, если еще не зарегистрированы </p>
+{% endif %}

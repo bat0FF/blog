@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+    <h1 class="fw-bolder">{{ post.title }}</h1>
+    <p class="text-muted fst-italic mb-2 text-end">
+        Размещено {{ post.publish }} Автор: {{ post.author }}
+    </p>
+    {{ post.body|markdown }}
+<div class="d-flex justify-content-end">
+        <a class="btn btn-primary float-left" href="{% url 'blog:post_share' post.id %}">
+            Поделиться постом
+        </a>
+</div>
+{% if similar_posts %}
+        <div class="row card mt-2">
+    <h2>Похожие посты:</h2>
+    {% for post in similar_posts %}
+        <p>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row card mt-2">
+
+{% for comment in comments %}
+        <div class="comment">
+            <p class="text-muted fst-italic mb-2">
+                Комментарий №{{ forloop.counter }} <br> Автор: {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            {{ comment.body|safe }}
+        </div>
+        <hr class="mt-1 mb-1"/>
+    {% empty %}
+        <p>Комментарии отсутствуют</p>
+    {% endfor %}
+
+{% include "blog/post/includes/comment_form.html" %}
+    </div>
+{% endblock %}

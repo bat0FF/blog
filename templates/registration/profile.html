@@ -1,0 +1,45 @@
+{% extends "blog/base.html" %}
+{% block title %}Профиль{% endblock title %}
+{% block content %}
+    <div>
+        <img src="{{ user.profile.avatar.url }} " />
+    </div>
+    {% if user_form.errors %}
+
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="alert alert-warning alert-dismissible fade show w-50  d-block" role="alert">
+                {% for key, value in user_form.errors.items %}
+                    <strong>{{ value }}</strong>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+            </div>
+        </div>
+    {% endif %}
+    <div class="form-content">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <div>
+                    <div>
+                        <label>Пользователь:</label>
+                        {{ user_form.username }}
+                        <hr>
+                        <label>Email:</label>
+                        {{ user_form.email }}
+                    </div>
+                    <hr>
+                    <div><a href="{% url 'password_change' %}">Изменить пароль</a>
+
+                        <hr>
+                        <label>Изменить аватарку:</label>
+                        {{ profile_form.avatar }}
+                    </div>
+                    <hr>
+                    <label>О себе:</label> {{ profile_form.bio }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Сохранить изменения</button>
+            <button type="reset" class="btn btn-primary btn-lg">Сбросить</button>
+        </form>
+    </div>
+{% endblock content %}

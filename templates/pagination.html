@@ -1,0 +1,13 @@
+<div class="pagination p-3">
+
+        {% if page.has_previous %} <!-- если есть предыдущая страница, то показываем её кнопку -->
+            <a class="page-link" href="?page={{ page.previous_page_number }}">Предыдущая</a> <!-- возвращает номер предыдущей страницы -->
+        {% endif %}
+        <a class="page-link disabled">
+           Страница {{ page.number }} из {{ page.paginator.num_pages }}.
+        </a>
+        {% if page.has_next %} <!-- если есть следующая страница, то показываем её кнопку -->
+            <a class="page-link" href="?page={{ page.next_page_number }}">Следующая</a> <!-- возвращает номер следующей страницы -->
+        {% endif %}
+
+</div>

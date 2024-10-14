@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Добавление поста{% endblock %}
+
+{% block content %}
+    {% if new_post %}
+        <h2>Пост добавлен</h2>
+<a href="{% url 'blog:post_list' %}">На главную</a>
+    {% else %}
+        {% include "blog/post/includes/post_form.html" %}
+    {% endif %}
+{% endblock %}

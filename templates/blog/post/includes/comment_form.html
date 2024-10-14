@@ -1,0 +1,14 @@
+<form action="{% url 'blog:post_comment' post.id %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <h5>Добавить новый комментарий</h5>
+
+        <div class="mt-2">
+            {{ form.body }}
+
+        </div>
+         <div class="mt-2">
+        <input type="submit" class="btn btn-primary mb-3" value="Добавить">
+         </div>
+    </div>
+</form>

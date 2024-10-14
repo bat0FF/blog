@@ -1,0 +1,35 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+
+{% block title %}Ваши заметки{% endblock %}
+
+{% block content %}
+    <h1>Опубликованные посты:</h1>
+
+    {% if tag %}
+        <h2>Все посты с тегом "{{ tag.name }}"</h2>
+    {% endif %}
+
+    {% for post in posts %}
+        <h4 class="fw-bolder">
+            <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+        </h4>
+        {% if post.tags.all %}
+
+            Tags:
+            {% for tag in post.tags.all %}
+                <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                    {{ tag.name }}
+                </a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
+        <div class="text-muted fst-italic mb-2">
+            Размещено {{ post.publish }} Автор: {{ post.author }}
+        </div>
+<div  class="mb-5">{{ post.body|markdown|truncatewords_html:30 }}</div>
+    {% endfor %}
+
+    {% include "pagination.html" with page=posts %}
+    {% include "blog/post/includes/post_form.html" %}
+{% endblock %}
